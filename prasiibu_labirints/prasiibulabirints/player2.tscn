@@ -1,0 +1,128 @@
+[gd_scene load_steps=8 format=3 uid="uid://bcx6ytdwmaohb"]
+
+[ext_resource type="Texture2D" uid="uid://b7kowb0l5hleh" path="res://catanim/spritesheet.png" id="1_i25i0"]
+[ext_resource type="Script" uid="uid://dug23xjdphlgq" path="res://player_2.gd" id="1_rihsh"]
+
+[sub_resource type="Animation" id="Animation_vop8p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_rihsh"]
+resource_name = "idle"
+length = 1.75001
+loop_mode = 1
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.916667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_i25i0"]
+resource_name = "walk_sides"
+length = 0.833342
+loop_mode = 1
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.416667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tj0vx"]
+_data = {
+&"RESET": SubResource("Animation_vop8p"),
+&"idle": SubResource("Animation_rihsh"),
+&"walk_sides": SubResource("Animation_i25i0")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rihsh"]
+radius = 4.0
+height = 12.0
+
+[node name="player" type="CharacterBody2D"]
+collision_mask = 6
+script = ExtResource("1_rihsh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_i25i0")
+hframes = 10
+vframes = 4
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_tj0vx")
+}
+autoplay = "idle"
+
+[node name="DashCooldownTimer" type="Timer" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_rihsh")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+offset_left = 23.0
+offset_top = 16.0
+offset_right = 63.0
+offset_bottom = 56.0
+
+[node name="current_amount" type="Label" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="Label2" type="Label" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "/"
+
+[node name="max_amount" type="Label" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "6"
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -107.0
+offset_right = 70.0
+offset_bottom = -84.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press F to interact
+(Need all 6 pages)"
+horizontal_alignment = 1
+
+[connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]

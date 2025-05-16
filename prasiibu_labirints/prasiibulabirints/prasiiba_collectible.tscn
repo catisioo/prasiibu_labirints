@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://tmgw56l20s45"]
+
+[ext_resource type="Script" uid="uid://8l43v13lh1uy" path="res://prasiiba_collectible.gd" id="1_7gtru"]
+[ext_resource type="Texture2D" uid="uid://pcegsnsahehy" path="res://catanim/atk_frame/prgprbar1.png" id="2_n4fgn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mo08h"]
+size = Vector2(38, 20)
+
+[node name="Node2D" type="Area2D"]
+script = ExtResource("1_7gtru")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mo08h")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_n4fgn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
