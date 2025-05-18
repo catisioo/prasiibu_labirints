@@ -83,6 +83,7 @@ autoplay = "idle"
 [node name="DashCooldownTimer" type="Timer" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.655, 0.655)
 position_smoothing_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

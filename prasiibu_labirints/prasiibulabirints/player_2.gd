@@ -4,7 +4,7 @@ var counter_value = 0
 var can_dash := true
 
 # --- stats ---
-@export var speed = 150*3 # Normal speed
+@export var speed = 150*5 # Normal speed
 @export var dash_multiplier = 3.0
 @export var hp = 50
 
@@ -50,7 +50,7 @@ func handle_input():
 
 		if Input.is_action_just_pressed("press_shift") and input_vector.length() > 0 and can_dash:
 			dash_direction = input_vector.normalized()
-			dash_remaining = screen_size.x * 0.1
+			dash_remaining = screen_size.x * 0.2
 			can_dash = false
 			$DashCooldownTimer.start()
 

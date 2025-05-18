@@ -6,6 +6,7 @@ var promptvisible = false
 func _ready() -> void:
 	var bossenemy = $enemies/Area2Denemy7
 	bossenemy.enemy_died.connect(_on_enemy_died)
+
 	
 
 
@@ -19,6 +20,7 @@ func _process(delta: float) -> void:
 		var amount_label = player.get_node("CanvasLayer/HBoxContainer/current_amount")
 		if amount_label and amount_label.text == "6":
 			get_tree().change_scene_to_file("res://puzzle.tscn")
+	
 	
 func _on_enemy_died():
 	
